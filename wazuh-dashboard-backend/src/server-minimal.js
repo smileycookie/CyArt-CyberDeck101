@@ -5,26 +5,19 @@ const { Server } = require('socket.io');
 const http = require('http');
 const axios = require('axios');
 const https = require('https');
-
 const app = express();
 const server = http.createServer(app);
-
 app.use(cors({ origin: "*" }));
 app.use(express.json());
-
 const io = new Server(server, { cors: { origin: "*" } });
-
 const WAZUH_API = 'https://100.66.240.63:55000';
 const auth = { username: 'wazuh-wui', password: 'wazuh-wui' };
-
 let token = null;
 let cachedAgents = [];
 let cachedLogs = [];
-
 const axiosInstance = axios.create({
   httpsAgent: new https.Agent({ rejectUnauthorized: false })
 });
-
 async function getToken() {
   try {
     const response = await axiosInstance.post(`${WAZUH_API}/security/user/authenticate`, {}, { auth });
@@ -34,7 +27,6 @@ async function getToken() {
     console.error('Auth failed:', error.message);
   }
 }
-
 async function fetchAllAgents() {
   try {
     if (!token) await getToken();
@@ -48,7 +40,6 @@ async function fetchAllAgents() {
     return cachedAgents;
   }
 }
-
 async function fetchLogs() {
   try {
     // Try Elasticsearch first
@@ -56,7 +47,6 @@ async function fetchLogs() {
       auth: { username: 'admin', password: 'admin' },
       params: { size: 50, sort: '@timestamp:desc' }
     });
-    
     const hits = response.data.hits.hits;
     const logs = hits.map(hit => ({
       id: hit._id,
@@ -76,13 +66,11 @@ async function fetchLogs() {
       rule_groups: hit._source.rule?.groups || [],
       rule_description: hit._source.rule?.description
     }));
-    
     cachedLogs = logs;
     return logs;
   } catch (error) {
     // Return sample logs if Elasticsearch fails
     if (cachedLogs.length > 0) return cachedLogs;
-    
     return [
       {
         id: 'sample-1',
@@ -105,35 +93,28 @@ async function fetchLogs() {
     ];
   }
 }
-
 io.on('connection', async (socket) => {
   console.log('Client connected');
-  
   const agents = await fetchAllAgents();
   const logs = await fetchLogs();
-  
   socket.emit('agents:initial', agents);
   socket.emit('logs:initial', logs);
-  
   const interval = setInterval(async () => {
     const updatedAgents = await fetchAllAgents();
     const updatedLogs = await fetchLogs();
     socket.emit('agents:update', updatedAgents);
     socket.emit('logs:update', updatedLogs);
   }, 30000);
-  
   socket.on('disconnect', () => clearInterval(interval));
 });
-
 // Essential API endpoints
 app.post("/api/field-click", (req, res) => {
   const { field, data, timestamp, agentCount } = req.body;
-  console.log(`🔍 FIELD CLICKED: ${field.toUpperCase()}`);
-  console.log(`⏰ Timestamp: ${timestamp}`);
-  console.log(`👥 Agent Count: ${agentCount}`);
+  console.log(`:mag: FIELD CLICKED: ${field.toUpperCase()}`);
+  console.log(`:alarm_clock: Timestamp: ${timestamp}`);
+  console.log(`:busts_in_silhouette: Agent Count: ${agentCount}`);
   res.json({ success: true });
 });
-
 app.post("/api/agent/restart", async (req, res) => {
   const { agentId } = req.body;
   try {
@@ -148,9 +129,7 @@ app.post("/api/agent/restart", async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 });
-
 setInterval(getToken, 14 * 60 * 1000);
-
 server.listen(3000, '0.0.0.0', async () => {
   console.log('Minimal Wazuh backend running on port 3000');
   getToken();
