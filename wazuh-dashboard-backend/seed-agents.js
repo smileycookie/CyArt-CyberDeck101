@@ -1,7 +1,5 @@
+require('dotenv').config(); 
 const mongoose = require('mongoose');
-
-// Connect to MongoDB
-mongoose.connect('mongodb+srv://cyartproject:Projectadmin@cyartdb.nukbmia.mongodb.net/wazuh_logs?retryWrites=true&w=majority&appName=CyartDB');
 
 const EventSchema = new mongoose.Schema({
   agent_id: String,
