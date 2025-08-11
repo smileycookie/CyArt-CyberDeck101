@@ -36,6 +36,11 @@ node server-minimal.js
 Frontend Setup
 Unzip the frontend folder. Open a terminal in the frontend directory.
 
+Open Front-end folder:
+
+rm -rf node_modules package-lock.json .next
+
+
 Install dependencies:
 
 npm install
