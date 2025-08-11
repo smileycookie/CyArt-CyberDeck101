@@ -21,7 +21,7 @@ agent:
 
 =\> curl -fsSL https://tailscale.com/install.sh \| sh && \\ =\> sudo
 tailscale up
-\--auth-key=tskey-auth-k2ZVCQWNoQ11CNTRL-zdeevBjQwsUa6CWuCDhMtU7MLwYocmDxg
+\--auth-key=$TAILSCALE_AUTH_KEY
 
 🔒 Note: Ensure your auth key is active and valid. Rotate it if
 necessary from your Tailscale dashboard.
