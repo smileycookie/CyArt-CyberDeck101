@@ -21,14 +21,83 @@ This repository is your complete guide, with two key sections:
 
 Follow these simple steps to get the CyArt-CyberDeck system running on your machine.
 
-### Agent Setup
+### Agent Setup for Tailscale VPN and Wazuh Server Integration
 
-Before you begin, ensure your agents are properly configured using the `Requirements.txt` guide.
+This guide explains how to connect an agent machine to a **Tailscale VPN** and then link it to a **Wazuh server** for monitoring and management.
 
-1.  Install **Tailscale** on your systems.
-2.  Connect to your **Wazuh server**.
+---
 
-### Backend Setup
+## 🛠️ Prerequisites
+
+- A machine (agent) running a compatible Linux distribution (e.g., Debian/Ubuntu on ARM64)
+- Access to the internet
+- A valid **Tailscale Auth Key**
+- Wazuh server with a static Tailscale IP
+
+---
+
+## 1️⃣ Connect the Agent to Tailscale VPN
+
+Use the command below to install and authenticate Tailscale on your agent:
+ ```bash
+curl -fsSL https://tailscale.com/install.sh | sh && \
+```
+ ```bash
+sudo tailscale up --auth-key=TAILSCALE_AUTH_KEY
+```
+🔒 Note: Ensure your auth key is active and valid. Rotate it if necessary from your Tailscale dashboard.
+
+## 2️⃣ Install and Connect Wazuh Agent
+
+Run the following command to download and install the Wazuh Agent package, and automatically configure it to connect to the Wazuh Manager over Tailscale:
+
+### Step 2: Install and Configure Wazuh Agent
+
+#### 🔧 For Ubuntu / Kali Linux
+ ```bash
+wget https://packages.wazuh.com/4.x/apt/pool/main/w/wazuh-agent/wazuh-agent_4.12.0-1_arm64.deb
+sudo WAZUH_MANAGER='100.66.240.63' dpkg -i ./wazuh-agent_4.12.0-1_arm64.deb
+sudo systemctl daemon-reload
+sudo systemctl enable wazuh-agent
+sudo systemctl start wazuh-agent
+ ```
+#### 🪟 For Windows
+```bash
+Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.12.0-1.msi -OutFile $env:tmp \wazuh-agent
+msiexec.exe /i $env:tmp\wazuh-agent /q WAZUH_MANAGER='100.66.240.63'
+```
+```bash
+NET START WazuhSvc
+```
+#### 🍎 For macOS
+```bash 
+curl -so wazuh-agent.pkg https://packages.wazuh.com/4.x/macos/wazuh-agent-4.12.0-1.intel64.pkg
+```
+```bash 
+echo "WAZUH_MANAGER='100.66.240.63'" > /tmp/wazuh_envs
+```
+```bash 
+sudo installer -pkg ./wazuh-agent.pkg -target /
+```
+```bash
+sudo /Library/Ossec/bin/wazuh-control start
+```
+✅ These command installs the agent and set  100.66.240.63 (Wazuh Server's Tailscale IP) as the manager.
+
+### Step 3: Verify Connection to Wazuh Server
+
+Open your browser and go to the following Tailscale IP address of the Wazuh server:
+```bash
+https://100.66.240.63
+```
+✅ If successful, you should see the Wazuh dashboard/login screen.
+
+### Notes:
+- Make sure the machine running the Wazuh server is also connected to the same Tailscale network.
+- For help with Tailscale authentication or key renewal, refer to the Tailscale documentation.
+
+
+## Backend Setup
 
 1.  Unzip the `backend` folder.
 2.  Navigate to the `src` directory in your terminal.
@@ -41,7 +110,7 @@ Before you begin, ensure your agents are properly configured using the `Requirem
     node server-minimal.js
     ```
 
-### Frontend Setup
+## Frontend Setup
 
 1.  Unzip the `frontend` folder and open it in your terminal.
 2.  *Optional but recommended*: Clear any old dependencies.
@@ -59,7 +128,7 @@ Before you begin, ensure your agents are properly configured using the `Requirem
 
 ---
 
-## 🛠️ Requirements
+### 🛠️ Requirements
 
 To run this project, you will need:
 
