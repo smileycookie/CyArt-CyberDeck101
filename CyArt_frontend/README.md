@@ -34,6 +34,6 @@ Copy and paste the URL into your browser to open the CyArt dashboard.
    take the help of the A.I Models/Tools to dectect the required dependencies
 7. **According to the output of the A.I Models/Tools,you have to install the dependencies one-by-one.**   
 
-##  ⚠️ Notes: Ensure Node.js is installed on your system. > For best results, use modern browsers like Chrome or Firefox.
+##  ⚠️ Notes: Ensure Node.js is installed on your system. For best results, use modern browsers like Chrome or Firefox.
 ## If this worked for you, You are Welcome!😊.
 
