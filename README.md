@@ -144,7 +144,6 @@ The project is organized as follows:
 
 ```plaintext
 📂 Project Root
-├── 📄 Requirements.txt   # 📡 Tailscale & Wazuh connection guide
-├── 📄 Readme.txt         # 📜 Detailed backend/frontend setup steps
+├── 📄 Readme.md          # 📜 Detailed backend/frontend setup steps
 ├── 📁 frontend/          # 🎨 Frontend source code
 └── 📁 backend/           # ⚙️ Backend source code
