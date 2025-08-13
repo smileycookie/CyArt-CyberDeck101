@@ -18,8 +18,9 @@ This guide explains how to connect an agent machine to a **Tailscale VPN** and t
 Use the command below to install and authenticate Tailscale on your agent:
 
 ```bash
-=> curl -fsSL https://tailscale.com/install.sh | sh && \
-=> sudo tailscale up --auth-key=tskey-auth-k2ZVCQWNoQ11CNTRL-zdeevBjQwsUa6CWuCDhMtU7MLwYocmDxg
+curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.gpg | sudo apt-key add -
+curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.list | sudo tee /etc/apt/sources.list.d/tailscale.list
+sudo apt install tailscale
 ```
 🔒 Note: Ensure your auth key is active and valid. Rotate it if necessary from your Tailscale dashboard.
 
@@ -79,3 +80,4 @@ Notes:
 
 => For help with Tailscale authentication or key renewal, refer to the Tailscale documentation.
 ```
+
