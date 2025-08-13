@@ -17,23 +17,28 @@ sudo -i
 
 ### **Step 3: Start Wazuh Services
 Run the following commands to start the necessary Wazuh components:
+```bash
 systemctl start wazuh-manager
 systemctl start wazuh-indexer
 systemctl start wazuh-dashboard
-
+```
 Step 4: Check Tailscale Connection
 Verify that Tailscale is active:
+```bash
 tailscale status
-
+```
 Step 5: Get the Server IP
 List all IP addresses assigned to the server:
+```bash
 ip a s
+```
 Look for the Tailscale IP and use it to log into the Wazuh Dashboard via your browser.
 
 Example Dashboard Login
 If your Tailscale IP is 100.66.240.63:
+```bash
 https://100.66.240.63
-
+```
 
 ---
 
@@ -73,7 +78,7 @@ Example command for Linux:
 ```bash
 wget https://packages.wazuh.com/4.x/apt/pool/main/w/wazuh-agent/wazuh-agent_VERSION_arm64.deb
 sudo WAZUH_MANAGER='100.66.240.63' dpkg -i ./wazuh-agent_VERSION_arm64.deb
-
+```
 
 🔒 Tips:
 
