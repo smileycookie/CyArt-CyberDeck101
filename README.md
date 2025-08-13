@@ -1,68 +1,70 @@
-"# CyArt-CyberDeck" 
-Project Name
+# CyArt-CyberDeck
 
-Log and Data Monitoring System
+![Static Badge](https://img.shields.io/badge/Status-Completed%20-blue)
 
-Requirements:
-Ability to collect and aggregate logs from various systems connected to a central server.
-Display logs and security events at both the server level and for individual systems.
-Integration with multiple SIEM tools, with the project initially using Wazuh.
-📖 Overview This project consists of a backend and frontend system for [brief purpose: e.g., Log Analysis and Security Monitoring using Wazuh].
+A robust **Log and Data Monitoring System** designed for seamless security oversight.
 
-There are two setup guides included in the repository:
+---
 
-Agent Setup Guide (Requirements.txt) – How to install Tailscale and connect to the Wazuh server.
+## 📖 Overview
 
-Project Installation Guide (README.md)– How to unzip files, install dependencies, and run the backend/frontend.
+CyArt-CyberDeck is a powerful solution for collecting, aggregating, and monitoring logs and security events from multiple systems.  
+It provides real-time insights at both the **server** and **individual system** levels.  
+While it supports multiple SIEM integrations, this project is initially configured to work with **Wazuh**.
 
-🚀 Quick Start<<<<<
+This repository includes two main setup guides:
 
-Agent Setup
-Follow Agent Setup Guide to:
+1. **Agent Setup Guide** (`Requirements.txt`) – How to install Tailscale and connect to the Wazuh server.  
+2. **Project Installation Guide** (`README.md`) – How to unzip files, install dependencies, and run the backend/frontend.
 
-Install Tailscale Connect to the Wazuh server
+---
 
-Backend Setup
-Unzip the backend folder. Open a terminal inside the src folder.
+## 🚀 Quick Start
 
-Install dependencies:
+### 🔹 Agent Setup
+Follow the **Agent Setup Guide** to:
 
-npm install
+- Install **Tailscale**
+- Connect the agent machine to the **Wazuh server**
 
-Start the backend:
+---
 
+### 🔹 Backend Setup
+1. Unzip the `backend` folder.  
+2. Open a terminal inside the `src` folder.  
+3. Install dependencies:
+   ```bash
+   npm install
+
+Setp 4: Start the backend:
+```bash
 node server-minimal.js
-
-Frontend Setup
-Unzip the frontend folder. Open a terminal in the frontend directory.
-
-Open Front-end folder:
-
-rm -rf node_modules package-lock.json .next
-
-
-Install dependencies:
-
-npm install
-
-Run the frontend:
-
+```
+🔹 Frontend Setup
+1. Unzip the frontend folder
+2. Open a terminal in the frontend directory.
+3. Clean old dependencies:
+```bash
+   rm -rf node_modules package-lock.json .next
+```
+4. Install dependencies:
+```bash
+   npm install
+```
+5. Run the frontend:
+```bash
 npm run dev
-
-🛠 Requirements <<<<<
-
-Node.js & npm
-
-Tailscale account
-
-Access to Wazuh server
-
+```
 📂 Repository Structure
+```bash
+├── Requirements.txt       # Tailscale & Wazuh connection guide
+├── README.md              # Project overview & backend/frontend setup
+├── frontend/              # Frontend application
+└── backend/               # Backend application
+```
 
-├── Requirements.txt # Tailscale & Wazuh connection guide
 
-├── Readme.txt # Detailed backend/frontend setup steps
 
-├── frontend/
 
-└── backend/
+
+
